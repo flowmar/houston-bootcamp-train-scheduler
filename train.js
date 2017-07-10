@@ -25,3 +25,8 @@ database.ref('trains').set({
     minutesAway: minutesAway
 });
 
+
+//
+$("#submit").on('click', function(trainName, destination, firstTrainTime, frequency) {
+database.ref('trains/')
+})
