@@ -1,6 +1,14 @@
 
+---
 
 App is deployed at: `https://pacific-taiga-29582.herokuapp.com/home.html`
+
+---
+
+GitHub Code Repository:
+`https://github.com/flowmar/train-scheduler`
+
+---
 
 
 # Train Scheduler -- Train Spotting
