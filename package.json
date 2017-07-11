@@ -1,0 +1,23 @@
+{
+  "name": "train-scheduler",
+  "version": "1.0.0",
+  "description": "An application that keeps track of train departure times.",
+  "main": "train.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowmar/train-scheduler.git"
+  },
+  "author": "Omar Imam <omar.imam@kineticvortex.com> (https://github.com/flowmar)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flowmar/train-scheduler/issues"
+  },
+  "homepage": "https://github.com/flowmar/train-scheduler#readme",
+  "dependencies": {
+    "firebase": "4.1.3",
+    "moment": "2.18.1"
+  }
+}

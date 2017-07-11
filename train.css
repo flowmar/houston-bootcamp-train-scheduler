@@ -11,3 +11,7 @@ background: black;
     text-shadow: 2px 2px 2px grey;
     background:rgba(200,60,200,.5);
 }
+
+#time {
+    background-color: green;
+}

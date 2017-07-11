@@ -11,19 +11,22 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var trainName = "";
-var destination = "";
-var frequency = "";
-var nextArrival = "";
-var minutesAway= "";
+var trainName = $('#trainName');
+var destination = $('#destination');
+var frequency = $('#frequency');
+var nextArrival = $('nextArrival');
+var minutesAway= $('minutesAway');
 
-database.ref('trains').set({
-    name: trainName,
-    destination: destination,
-    frequency: frequency,
-    nextArrival: nextArrival,
-    minutesAway: minutesAway
-});
+var trains = database.ref('trains');
+
+console.log(trains);
+
+var now = moment().format();
+console.log(now);
+// $('#time').text("The Current time is: " + moment().format());
+$('#time').append(moment().format('HH:mm') + "<br>");
+
+$('#time').append(moment().format('LTS'));
 
 
 //
