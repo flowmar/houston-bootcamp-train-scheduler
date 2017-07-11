@@ -78,21 +78,21 @@
                     <h4 class="card-title">Submit a Train</h4>
                 </div>
                 <div class="bg-success card-block text-center">
-                    <form action="submit">
+                    <form action="submit" class="text-center">
                         <label for="trainName">Train Name: </label>
                         <input type="text" placeholder="Train Name" id="trainName">
                         <br>
                         <label for="destination">Destination: </label>
                         <input type="text" placeholder="Destination" id="destination"><br>
-                        <label for="firstTrainTime"></label>
-                        <input type="text" placeholder="firstTrainTime"><br>
-                        <label for="frequency"></label>
+                        <label for="firstTrainTime">First Train Leaves: </label>
+                        <input id="firstTrainTime" type="text" placeholder="When does the first train leave?"><br>
+                        <label for="frequency">Frequency (min): </label>
                         <input type="text" placeholder="Frequency(In Minutes)" id="frequency">
                         <br>
                     </form>
                 </div>
                 <div class="text-center card-footer bg-inverse">
-                    <button class="btn btn-success bg-inverse" role="button">Submit</button></div>
+                    <button id="submit" class="btn btn-success bg-inverse" role="button">Submit</button></div>
             </div>
         </div>
 
