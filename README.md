@@ -1,4 +1,9 @@
-# Train Scheduler
+
+
+App is deployed at: `https://pacific-taiga-29582.herokuapp.com/home.html`
+
+
+# Train Scheduler -- Train Spotting
 # Week 7 Assignment - Train Scheduler (Basic - Recommended)
 
 ##### _Because that Rock Paper Scissors Game is Too Damn Hard_

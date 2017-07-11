@@ -1,0 +1,36 @@
+[debug] [2017-07-11T04:37:36.716Z] ----------------------------------------------------------------------
+[debug] [2017-07-11T04:37:36.719Z] Command:      /Users/flowmar/.nvm/versions/node/v8.1.3/bin/node /Users/flowmar/.nvm/versions/node/v8.1.3/bin/firebase serve
+[debug] [2017-07-11T04:37:36.719Z] CLI Version:  3.9.1
+[debug] [2017-07-11T04:37:36.719Z] Platform:     darwin
+[debug] [2017-07-11T04:37:36.719Z] Node Version: v8.1.3
+[debug] [2017-07-11T04:37:36.720Z] Time:         Mon Jul 10 2017 23:37:36 GMT-0500 (CDT)
+[debug] [2017-07-11T04:37:36.720Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-07-11T04:37:36.730Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-07-11T04:37:36.730Z] > authorizing via signed-in user
+[debug] [2017-07-11T04:37:36.731Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-07-11T04:37:36.732Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/iUn4d8qgZqoXwlY096g835hSX92qSEr50ZGCCMHhY5Q',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon Jul 10 2017 23:37:36 GMT-0500 (CDT)
+[debug] [2017-07-11T04:37:36.973Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-11T04:37:36.988Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/train-scheduler-216e6  
+ Mon Jul 10 2017 23:37:36 GMT-0500 (CDT)
+[debug] [2017-07-11T04:37:37.580Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-11T04:37:37.581Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/train-scheduler-216e6/tokens  
+ Mon Jul 10 2017 23:37:37 GMT-0500 (CDT)
+[debug] [2017-07-11T04:37:37.943Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/flowmar/code/src/github.com/flowmar/train-scheduler'...
+[info] 
+[debug] [2017-07-11T04:37:37.947Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/train-scheduler-216e6  
+ Mon Jul 10 2017 23:37:37 GMT-0500 (CDT)
+[debug] [2017-07-11T04:37:38.226Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-11T04:37:38.226Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/391022964912/clients/_:getWebAppConfig  
+ Mon Jul 10 2017 23:37:38 GMT-0500 (CDT)
+[debug] [2017-07-11T04:37:38.785Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-11T04:37:38.802Z] TypeError: Cannot read property 'public' of undefined
+[error] 
+[error] Error: An unexpected error has occurred.

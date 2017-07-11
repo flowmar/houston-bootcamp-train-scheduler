@@ -9,9 +9,8 @@ var config = {
 };
 
 firebase.initializeApp(config);
-
+// Create reference to firebase
 var database = firebase.database();
-
 var trains = database.ref('trains');
 
 console.log(trains);
@@ -39,4 +38,6 @@ $("#submit").on('click', function (trainName, destination, firstTrainTime, frequ
         firstTrainTime: firstTrainTime,
         frequency: frequency
     });
+
+    alert("Success!");
 });
