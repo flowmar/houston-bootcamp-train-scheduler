@@ -1,2 +1,7 @@
 .DS_Store
 node_modules
+logic.md
+firebase-debug.log
+database.rules.json
+composer.json
+firebase.json
