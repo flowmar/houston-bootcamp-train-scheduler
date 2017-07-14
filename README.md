@@ -1,6 +1,6 @@
 
 
-App is deployed at: `https://pacific-taiga-29582.herokuapp.com/home.html`
+App is deployed at: `https://pacific-taiga-29582.herokuapp.com/`
 
 
 # Train Scheduler -- Train Spotting
