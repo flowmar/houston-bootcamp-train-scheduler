@@ -16,12 +16,32 @@ var database = firebase.database();
 // Create a reference to the data stored in the table
 var trains = database.ref();
 
-// Prints the arary of train objects to the console
-trains.on('value', function (snapshot)
-{
-    console.log(snapshot.val());
-});
+// Create a global variable for the train data
+var trainData = ""
 
+
+function loadpage() {
+    // Listen for changes to the database
+    trains.on('value', function (snapshot) {
+
+        // Prints the array of train objects to the console
+        trainData = snapshot.val();
+        console.log(trainData);
+        return trainData;
+    });
+
+
+    console.log(trainData);
+    // Loop through the data and create a row in the HTML table for every entry
+    for (var i = 0; i < trainData.length; i++) {
+
+        var trainName = trainData[i].trainName;
+        var destination = trainData[i].destination;
+        console.log(trainData[i].trains);
+        console.log(destination);
+        // $('.table').append('<tr><td>' + '</td></tr>')
+    }
+}
 
 
 var now = moment().format();
@@ -34,8 +54,7 @@ $('#time').append(moment().format('LTS'));
 
 
 // When the 'submit' button is clicked...
-$("#submit").on('click', function ()
-{
+$("#submit").on('click', function () {
     // Take the input from the input text boxes
     var trainName = $('#trainName').val().trim();
     var destination = $('#destination').val().trim();
@@ -43,7 +62,7 @@ $("#submit").on('click', function ()
     var firstTrainTime = $('#firstTrainTime').val().trim();
 
     //
-    database.ref('trains').child('/trains').push({
+    database.ref().child('/trains').push({
         trainName: trainName,
         destination: destination,
         firstTrainTime: firstTrainTime,
@@ -52,3 +71,5 @@ $("#submit").on('click', function ()
 
     alert("Success!");
 });
+
+loadpage();
