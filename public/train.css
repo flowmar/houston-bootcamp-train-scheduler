@@ -1,24 +1,22 @@
 body {
-background: black;
+  background: black;
 }
 
-
 #title {
-    font-family: 'Fresca', sans-serif;
-    font-style: bold;
-    font-size: 4rem;
-    color: white;
-    text-shadow: 2px 2px 2px black;
-    background:rgba(200,60,200,.5);
+  font-family: 'Fresca', sans-serif;
+  font-style: bold;
+  font-size: 4rem;
+  color: white;
+  text-shadow: 2px 2px 2px black, 1px 1px 1px black;
+  background: rgba(200, 60, 200, 0.5);
 }
 
 #time {
-    background-color: green;
+  background-color: green;
 }
 
 .card-title {
-    font-family: 'Fresca';
-    font-size: 36px;
-    text-shadow: 2px 2px 2px black;
+  font-family: 'Fresca';
+  font-size: 36px;
+  text-shadow: 2px 2px 2px black;
 }
-
