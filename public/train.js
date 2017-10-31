@@ -1,5 +1,5 @@
-import 'babel';
-import * as firebase from 'firebase';
+// import 'babel';
+// import * as firebase from 'firebase';
 
 // Initialize Firebase
 var config = {
@@ -33,41 +33,54 @@ function loadpage() {
     // Prints the array of train objects to the console
     trainData = snapshot.val();
     trainName = trainData[0].trainName;
-    console.log(trainData);
-    console.log(trainName);
+    // console.log(trainData);
+    // console.log(trainName);
 
     // Loop through the data and create a row in the HTML table for every entry
     for (var i = 0; i < trainData.length; i++) {
       trainName = trainData[i].trainName;
       destination = trainData[i].destination;
+
       frequency = trainData[i].frequency;
       nextArrival = trainData[i].nextArrival;
       minutesAway = trainData[i].minutesAway;
-      console.log(trainName);
-      console.log(destination);
+      // console.log(trainName);
+      // console.log(destination);
       $('#table').append(
-        '<tr><td class="font-weight-bold">' +
+        '<tr><td class="font-weight-bold lead h1">' +
           trainName +
-          '</td><td class="font-italic">' +
+          '</td><td class="font-italic lead text-uppercase">' +
           destination +
-          '</td><td>' +
+          '</td><td class=lead>' +
           frequency +
-          '</td><td>' +
+          '</td><td class=lead>' +
           nextArrival +
-          '</td><td>' +
+          '</td><td class=lead>' +
           minutesAway +
           '</td></tr>'
       );
     }
-    console.log('YAAAY');
     var now = moment().format();
     console.log(now);
   });
 
-  // $('#time').text("The Current time is: " + moment().format());
-  $('#time').append(moment().format('HH:mm') + '<br>');
+  // Set an Interval to update the time at the top of the page every second
+  setInterval(_ => {
+    let now = moment().format('LTS');
+    let nowDay = moment().format('LL');
 
-  $('#time').append(moment().format('LTS'));
+    $('#time').empty();
+    $('#time').append(
+      'The current time is:<br> <strong>' +
+        now +
+        '</strong>' +
+        '<br> on <br>' +
+        nowDay
+    );
+  }, 1000);
+
+  var firstTrainTime = moment([2014, 5, 22, 12, 00, 01, 00]);
+  $('#test').html('<span class="text-white">' + firstTrainTime) + '</span>';
 
   // When the 'submit' button is clicked...
   $('#submit').on('click', function() {
@@ -81,23 +94,35 @@ function loadpage() {
     var frequency = $('#frequency')
       .val()
       .trim();
-    var firstTrainTime = $('#firstTrainTime')
-      .val()
-      .trim();
+    var firstTrainTime = moment(
+      $('#firstTrainTime')
+        .val()
+        .trim(),
+      'HH:mm'
+    )
+      .subtract(10, 'years')
+      .format('X');
 
-    //
-    database
-      .ref()
-      .child('/trains')
-      .push({
-        trainName: trainName,
-        destination: destination,
-        firstTrainTime: firstTrainTime,
-        frequency: frequency
-      });
+    let newTrain = {
+      name: trainName,
+      destination: destination,
+      frequency: frequency,
+      firstTrain: firstTrainTime
+    };
+
+    // Push new train to the database
+    db.ref().push(newTrain);
+    clearBoxes();
 
     alert('Success!');
   });
+}
+
+function clearBoxes() {
+  $('#trainName').val('');
+  $('#destination').val('');
+  $('#frequency').val('');
+  $('#firstTrainTime').val('');
 }
 
 loadpage();
