@@ -1,0 +1,10 @@
+{
+    "name": "flowmar/train-scheduler",
+    "authors": [
+        {
+            "name": "Flowmar",
+            "email": "omar.imam@kineticvortex.com"
+        }
+    ],
+    "require": {}
+}
