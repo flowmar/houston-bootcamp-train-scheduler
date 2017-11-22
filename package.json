@@ -4,8 +4,7 @@
   "description": "An application that keeps track of train departure times.",
   "main": "train.js",
   "scripts": {
-    "test": "npm start",
-    "build": "babel public/train.js -d lib"
+    "test": "npm start"
   },
   "repository": {
     "type": "git",
@@ -22,8 +21,6 @@
     "moment": "2.18.1"
   },
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.0",
-    "babel-preset-env": "1.6.1"
+    "eslint-config-google": "^0.9.1"
   }
 }

@@ -2,6 +2,9 @@
 node_modules
 logic.md
 firebase-debug.log
-
+question.js
 /vendor/
 composer-setup.php
+momentjspractice.js
+momentjs.html
+.vscode

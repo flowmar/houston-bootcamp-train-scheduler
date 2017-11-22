@@ -5,8 +5,8 @@ body {
 }
 
 #title {
-  font-family: 'Audiowide', sans-serif;
-  font-style: bold;
+  font-family: "Audiowide", sans-serif;
+  font-weight: bold;
   font-size: 6rem;
   color: white;
   text-shadow: 2px 2px 2px black, 1px 1px 1px black;
@@ -17,7 +17,7 @@ body {
 table {
   -webkit-box-shadow: 0.05rem 0.2rem 0.2rem 0.1rem green;
   box-shadow: 0.05rem 0.2rem 0.2rem 0.1rem green;
-  font-family: 'Inconsolata';
+  font-family: "Inconsolata";
   font-size: medium;
 }
 
@@ -33,11 +33,11 @@ th {
 #time {
   background-color: green;
   text-shadow: none;
-  font-family: 'Poiret+One';
+  font-family: "Poiret+One";
 }
 
 .card-title {
-  font-family: 'Fresca';
+  font-family: "Fresca";
   font-size: 36px;
   text-shadow: 2px 2px 2px black;
 }
