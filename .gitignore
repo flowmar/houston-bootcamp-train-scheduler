@@ -8,3 +8,6 @@ composer-setup.php
 momentjspractice.js
 momentjs.html
 .vscode
+.nvmrc
+.firebaserc
+trains.json
