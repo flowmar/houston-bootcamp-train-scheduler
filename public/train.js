@@ -25,6 +25,8 @@ let trainName;
 // let frequency;
 // let nextArrival;
 // let minutesAway;
+let lastTrainTime;
+let counter = 0;
 
 // Clears out the user input boxes
 function clearBoxes() {
@@ -41,16 +43,32 @@ function createTable() {
     let trainName = trainData[i].trainName;
     let destination = trainData[i].destination;
     let frequency = trainData[i].frequency;
-    let nextArrival = trainData[i].nextArrival;
+    let nextArrival;
+    // let nextArrival = trainData[i].nextArrival;
     let minutesAway = trainData[i].minutesAway;
     let firstTrainTime = trainData[i].firstTrainTime;
+    let lastTrainTime;
     console.log("Train Number: " + i);
     console.log("Train Name: " + trainName);
     console.log("Destination: " + destination);
     console.log("Frequency: " + frequency);
 
+    // If counter is 0, base lastTrainTime off of firstTrainTime
+    if (counter === 0) {
+      lastTrainTime = moment(firstTrainTime, "HH:mm");
+      counter++;
+    } else {
+      // Otherwise, base it off of the previous train time
+      lastTrainTime = moment(lastTrainTime).add(frequency, "mm");
+      counter++;
+    }
+    nextArrival = moment(lastTrainTime)
+      .add(frequency, "mm")
+      .format("HH:mm");
+    console.log(nextArrival);
+
     // Loop through the data and create a row in the HTML table for every entry
-    $("#tbody").append(
+$("#tbody").append(
       '<tr><td class="font-weight-bold lead h1">' +
         trainName +
         '</td><td class="font-italic lead text-uppercase">' +
@@ -60,14 +78,10 @@ function createTable() {
         '</td><td class="lead">' +
         nextArrival +
         '</td><td class="lead">' +
-        minutesAway +
+        minutesAwa    y +
         "</td></tr>"
     );
-  }
-
-  // Use the firstTrainTime and frequency of each train to calculate the Next Arrival and Minutes Away columns
-  for (let j = 0; j < Object.keys(trainData).length; j++) {
-    firstTrainTime;
+    // i++;
   }
 }
 
@@ -88,9 +102,18 @@ function setClock() {
   }, 1000);
 }
 
+// TODO: Form validation
+// function validateForm() {
+//   var x = document.forms["newTrainForm"]["fname"].value;
+//   if (x == "") {
+//     alert("Name must be filled out.");
+//     return false;
+//   }
+// }
+
 function loadpage() {
   // Listen for changes to the database, when a change occurs,
-  trains.on("value", snapshot => {
+  trains.once("value", snapshot => {
     // Set the trainData variable to the human-readable value of the snapshot
     trainData = snapshot.val();
     console.log(trainData);
@@ -117,10 +140,9 @@ function loadpage() {
         .val()
         .trim(),
       "HH:mm"
-    )
-      .subtract(10, "years")
-      .format("X");
+    );
 
+    // Create a new train object
     let newTrain = {
       trainName: trainName,
       destination: destination,
@@ -132,10 +154,18 @@ function loadpage() {
     trains.push(newTrain);
     clearBoxes();
 
-    alert("Success!");
+    alert(
+      "Success! Your train, " +
+        trainName +
+        "\n travelling to " +
+        destination +
+        "has been added to the schedule!"
+    );
   });
 }
-
+db.ref().on("child_added", function(childSnapshot, prevChildKey) {
+  console.log(childSnapshot.val());
+});
 $(document).ready(function() {
   loadpage();
 });
