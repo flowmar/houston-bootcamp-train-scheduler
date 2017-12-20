@@ -26,25 +26,49 @@ let minutesAway;
 let firstTrainTime;
 let trainData;
 
-db.ref().on("value", snapshot => {
-  trainData = snapshot.val();
-  console.log("FUICAFDAFSDGAEWFEGD");
-  console.log(trainData);
-  return trainData;
-});
+// db.ref().once("value", snapshot => {
+//   trainData = snapshot.val();
+//   console.log("FUICAFDAFSDGAEWFEGD");
+//   console.log(trainData);
+//   return trainData;
+// });
+
+// Create a function to clear out input boxes after submission
+function clearBoxes() {
+  $("#trainName").val("");
+  $("#destination").val("");
+  $("#frequency").val("");
+  $("#firstTrainTime").val("");
+}
+
+// Create a function to display the time and date
+function setClock() {
+  // Set an Interval to update the time at the top of the page every second
+  setInterval(_ => {
+    let now = moment().format("LTS");
+    let nowDay = moment().format("LL");
+    // Update the time every second
+    $("#time").empty();
+    $("#time").append(
+      "The current time is:<br> <strong>" +
+        now +
+        "</strong>" +
+        "<br> on <br>" +
+        nowDay
+    );
+  }, 1000);
+}
 function loadpage() {
   // Run the function to create the clock at the top of the screen
   setClock();
   // Listen for changes to the database, when a change occurs,
-  // db.ref().once("value", snapshot => {
-  //   // Set the trainData variable to the human-readable value of the snapshot
-  //   trainData = snapshot.val();
-  //   console.log(trainData);
-  //   // Run the function to create the table from the preexisting data
-  //   createTable();
-  // });
+  db.ref().once("value", snapshot => {
+    // Set the trainData variable to the human-readable value of the snapshot
+    trainData = snapshot.val();
+    console.log(trainData);
+  });
   setTimeout(function() {
-    createTable(trainData);
+    createTable();
   }, 3000);
   // Event listener for the submit button
   // When the 'submit' button is clicked...
@@ -75,7 +99,7 @@ function loadpage() {
 
     console.log(newTrain);
     // Push new train to the database
-    db.ref(9).push(newTrain);
+    db.ref().push(newTrain);
     clearBoxes();
 
     alert(
@@ -89,36 +113,46 @@ function loadpage() {
   });
 }
 
-// Create a function to clear out input boxes after submission
-function clearBoxes() {
-  $("#trainName").val("");
-  $("#destination").val("");
-  $("#frequency").val("");
-  $("#firstTrainTime").val("");
-}
+// Add a new row to the table when a new train is added to the database
+db.ref().on("child_added", (childSnapshot, prevChildKey) => {
+  console.log(childSnapshot.val());
+  trainData = childSnapshot.val();
+  let childName = childSnapshot.val().trainName;
+  let childDestination = childSnapshot.val().destination;
+  let childFrequency = childSnapshot.val().frequency;
+  let childFirstTrain = childSnapshot.val().firstTrainTime;
 
-// Create a function to display the time and date
-function setClock() {
-  // Set an Interval to update the time at the top of the page every second
-  setInterval(_ => {
-    let now = moment().format("LTS");
-    let nowDay = moment().format("LL");
-    // Update the time every second
-    $("#time").empty();
-    $("#time").append(
-      "The current time is:<br> <strong>" +
-        now +
-        "</strong>" +
-        "<br> on <br>" +
-        nowDay
-    );
-  }, 1000);
-}
+  let childDifference = moment().diff(moment.unix(childFirstTrain), "minutes");
+  let childRemainder =
+    moment().diff(moment.unix(childFirstTrain), "minutes") % childFrequency;
+  let childMinutes = childFrequency - childRemainder;
 
-function createTable(trainData) {
-  console.log(trainData);
-  for (let i = 0; i < Object.keys(trainData).length; i++) {
+  let childArrival = moment()
+    .add(childMinutes, "m")
+    .format("hh:mm A");
+
+  createTable();
+
+  $("#tbody").append(
+    "<tr><td>" +
+      childName +
+      "</td><td>" +
+      childDestination +
+      "</td><td>" +
+      childFrequency +
+      "</td><td>" +
+      childArrival +
+      "</td><td>" +
+      childMinutes +
+      "</td></tr>"
+  );
+});
+
+function createTable() {
+  for (let i = 0; i < Object.keys(trainData).length; ++i) {
+    console.log("HELLO!");
     console.log(trainData);
+    console.log(trainData[i]);
     destination = trainData[i].destination;
     frequency = trainData[i].frequency;
     trainName = trainData[i].trainName;
@@ -149,38 +183,4 @@ function createTable(trainData) {
   }
 }
 
-// Add a new row to the table when a new train is added to the database
-db.ref().on("child_added", (childSnapshot, prevChildKey) => {
-  console.log(childSnapshot.val());
-  let childName = childSnapshot.val().trainName;
-  let childDestination = childSnapshot.val().destination;
-  let childFrequency = childSnapshot.val().frequency;
-  let childFirstTrain = childSnapshot.val().firstTrainTime;
-
-  let childDifference = moment().diff(moment.unix(childFirstTrain), "minutes");
-  let childRemainder =
-    moment().diff(moment.unix(childFirstTrain), "minutes") % childFrequency;
-  let childMinutes = childFrequency - childRemainder;
-
-  let childArrival = moment()
-    .add(childMinutes, "m")
-    .format("hh:mm A");
-
-  createTable(trainData);
-
-  $("#tbody").append(
-    "<tr><td>" +
-      childName +
-      "</td><td>" +
-      childDestination +
-      "</td><td>" +
-      childFrequency +
-      "</td><td>" +
-      childArrival +
-      "</td><td>" +
-      childMinutes +
-      "</td></tr>"
-  );
-});
-
-loadpage();
+$(document).ready(loadpage());
