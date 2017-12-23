@@ -19,19 +19,12 @@ const db = firebase.database();
 
 // Create global variables
 
-let destination;
-let frequency;
-let trainName;
-let minutesAway;
-let firstTrainTime;
+let destination = "";
+let frequency = 0;
+let trainName = "";
+let minutesAway = 0;
+let firstTrainTime = "";
 let trainData;
-
-// db.ref().once("value", snapshot => {
-//   trainData = snapshot.val();
-//   console.log("FUICAFDAFSDGAEWFEGD");
-//   console.log(trainData);
-//   return trainData;
-// });
 
 // Create a function to clear out input boxes after submission
 function clearBoxes() {
@@ -58,6 +51,7 @@ function setClock() {
     );
   }, 1000);
 }
+
 function loadpage() {
   // Run the function to create the clock at the top of the screen
   setClock();
@@ -67,99 +61,127 @@ function loadpage() {
     trainData = snapshot.val();
     console.log(trainData);
   });
-  setTimeout(function() {
-    createTable();
-  }, 3000);
-  // Event listener for the submit button
-  // When the 'submit' button is clicked...
-  $("#submit").on("click", function() {
-    // Take the input from the input text boxes
-    var trainName = $("#trainName")
-      .val()
-      .trim();
-    var destination = $("#destination")
-      .val()
-      .trim();
-    var frequency = parseInt(
-      $("#frequency")
-        .val()
-        .trim()
-    );
-    var firstTrain = $("#firstTrainTime")
-      .val()
-      .trim();
-
-    // Create a new train object
-    let newTrain = {
-      trainName: trainName,
-      destination: destination,
-      frequency: frequency,
-      firstTrainTime: firstTrain
-    };
-
-    console.log(newTrain);
-    // Push new train to the database
-    db.ref().push(newTrain);
-    clearBoxes();
-
-    alert(
-      "Success! Your train, " +
-        trainName +
-        "\n travelling to " +
-        destination +
-        "has been added to the schedule!"
-    );
-    return false;
-  });
+  // setTimeout(function() {
+  //   createTable();
+  // }, 3000);
 }
+// Event listener for the submit button
+// When the 'submit' button is clicked...
+$("#submit").on("click", function() {
+  // Take the input from the input text boxes
+  let newtrainName = $("#trainName")
+    .val()
+    .trim();
+  let newDestination = $("#destination")
+    .val()
+    .trim();
+  let newFrequency = parseInt(
+    $("#frequency")
+      .val()
+      .trim()
+  );
+  let newfirstTrain = moment(
+    $("#firstTrainTime")
+      .val()
+      .trim(),
+    "HH:mm"
+  )
+    .subtract(1, "year")
+    .format("X");
+
+  // Create a new train object
+  let newTrain = {
+    trainName: newtrainName,
+    destination: newDestination,
+    frequency: newFrequency,
+    firstTrainTime: newfirstTrain
+  };
+  console.log("LINE NINETY THREE");
+  console.log(newTrain);
+  // Push new train to the database
+  db.ref().push(newTrain);
+  clearBoxes();
+
+  alert(
+    "Success! Your train, " +
+      newtrainName +
+      "\n travelling to " +
+      newDestination +
+      " has been added to the schedule!"
+  );
+  createTable();
+  return false;
+});
 
 // Add a new row to the table when a new train is added to the database
 db.ref().on("child_added", (childSnapshot, prevChildKey) => {
-  console.log(childSnapshot.val());
+  // console.log(childSnapshot.val());
   trainData = childSnapshot.val();
-  let childName = childSnapshot.val().trainName;
-  let childDestination = childSnapshot.val().destination;
-  let childFrequency = childSnapshot.val().frequency;
-  let childFirstTrain = childSnapshot.val().firstTrainTime;
+  for (var i = 0; i < trainData.length; i++) {
+    let childName = childSnapshot.val().trainName;
+    let childDestination = childSnapshot.val().destination;
+    let childFrequency = childSnapshot.val().frequency;
+    let childFirstTrain = childSnapshot.val().firstTrainTime;
 
-  let childDifference = moment().diff(moment.unix(childFirstTrain), "minutes");
-  let childRemainder =
-    moment().diff(moment.unix(childFirstTrain), "minutes") % childFrequency;
-  let childMinutes = childFrequency - childRemainder;
+    let childDifference = moment().diff(
+      moment.unix(childFirstTrain),
+      "minutes"
+    );
+    let childRemainder =
+      moment().diff(moment.unix(childFirstTrain), "minutes") % childFrequency;
+    let childMinutes = childFrequency - childRemainder;
 
-  let childArrival = moment()
-    .add(childMinutes, "m")
-    .format("hh:mm A");
+    let childArrival = moment()
+      .add(childMinutes, "m")
+      .format("hh:mm A");
 
-  createTable();
+    createTable();
 
-  $("#tbody").append(
-    "<tr><td>" +
-      childName +
-      "</td><td>" +
-      childDestination +
-      "</td><td>" +
-      childFrequency +
-      "</td><td>" +
-      childArrival +
-      "</td><td>" +
-      childMinutes +
-      "</td></tr>"
-  );
+    $("#tbody").append(
+      "<tr><td>" +
+        childName +
+        "</td><td>" +
+        childDestination +
+        "</td><td>" +
+        childFrequency +
+        "</td><td>" +
+        childArrival +
+        "</td><td>" +
+        childMinutes +
+        "</td></tr>"
+    );
+  }
 });
 
 function createTable() {
-  for (let i = 0; i < Object.keys(trainData).length; ++i) {
-    console.log("HELLO!");
-    console.log(trainData);
-    console.log(trainData[i]);
-    destination = trainData[i].destination;
-    frequency = trainData[i].frequency;
-    trainName = trainData[i].trainName;
+  // for (let i = 0; i < Object.keys(trainData).length; i++) {
+  console.log("CREATE TABLE!");
+  let keys = Object.keys(trainData);
+  console.log(keys);
+  for (let key in keys) {
+    var trainJSON = JSON.stringify(keys);
+    console.log(trainJSON);
+    console.log(trainData[keys[key]]);
+    destination = JSON.stringify(trainData[keys[key]].destination);
+    frequency = JSON.stringify(trainData[keys[key]].frequency);
+    trainName = JSON.stringify(trainData[keys[key]].trainName);
+    minutesAway = JSON.stringify(trainData[keys[key]].minutesAway);
+    firstTrainTime = JSON.stringify(trainData[keys[key]].firstTrainTime);
+    console.log(
+      "Destination: " +
+        destination +
+        "\nFrequency: " +
+        frequency +
+        "\nTrain Name: " +
+        trainName +
+        "\n Minutes away: " +
+        minutesAway +
+        "\n First Train Time: " +
+        firstTrainTime
+    );
 
-    minutesAway = trainData[i].minutesAway;
-    firstTrainTime = trainData[i].firstTrainTime;
-    let difference = moment().diff(moment.unix(firstTrainTime), "minutes");
+    console.log(firstTrainTime);
+    let difference = moment().diff(moment().unix(firstTrainTime), "minutes");
     let remainder =
       moment().diff(moment().unix(firstTrainTime), "minutes") % frequency;
     minutesAway = frequency - remainder;
@@ -183,4 +205,12 @@ function createTable() {
   }
 }
 
-$(document).ready(loadpage());
+$(document).ready(_ => {
+  db.ref().once("value", snapshot => {
+    trainData = snapshot.val();
+    console.log("FUICAFDAFSDGAEWFEGD");
+    console.log(trainData);
+    createTable();
+  });
+  loadpage();
+});
