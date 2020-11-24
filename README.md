@@ -1,6 +1,6 @@
 
 
-App is deployed at: (https://flowmar-train-firebase.herokuapp.com)[https://flowmar-train-firebase.herokuapp.com/]
+App is deployed at: [https://flowmar-train-firebase.herokuapp.com](https://flowmar-train-firebase.herokuapp.com/)
 
 
 # Train Scheduler -- Train Spotting
