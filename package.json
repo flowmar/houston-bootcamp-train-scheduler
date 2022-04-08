@@ -18,7 +18,7 @@
   "homepage": "https://github.com/flowmar/train-scheduler#readme",
   "dependencies": {
     "firebase": "^5.2.0",
-    "moment": "^2.22.2"
+    "moment": "^2.29.2"
   },
   "devDependencies": {
     "eslint-config-google": "^0.9.1"
