@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/flowmar/train-scheduler#readme",
   "dependencies": {
-    "firebase": "^5.2.0",
+    "firebase": "^10.9.0",
     "moment": "^2.22.2"
   },
   "devDependencies": {
